@@ -13,14 +13,17 @@ from gtts import gTTS
 time.sleep(5)
 
 # setting callbacks for different events to see if it works, print the message etc.
+# mqtt 연결
 def on_connect(client, userdata, flags, rc, properties=None):
     print("CONNACK received with code %s." % rc)
 
 # with this callback you can see if your publish was successful
+# mqtt 데이터 발행
 def on_publish(client, userdata, mid, properties=None):
     print("mid: " + str(mid))
 
 # print which topic was subscribed to
+# 토픽
 def on_subscribe(client, userdata, mid, granted_qos, properties=None):
     print("Subscribed: " + str(mid) + " " + str(granted_qos))
 
@@ -29,7 +32,7 @@ def on_message(client, userdata, msg):
     recvData =str(msg.payload.decode("utf-8"))
     print("Received message=", recvData)
     
-def measureDistance(txPower, rssi):
+def measureDistance(txPower, rssi): # 비콘 거리
     if rssi ==0:
         return -1.0 # 정확성을 결정 못할 경우 -1
     
@@ -55,7 +58,7 @@ client.connect("850e1de2597e4f2d9496cfe35ffb2019.s1.eu.hivemq.cloud", 8883)
 
 
 
-def scan():
+def scan(): #비콘 
     scan = pexpect.spawn("sudo hcitool lescan --duplicates 1>/dev/null")
     p=pexpect.spawn("sudo hcidump --raw")
     capturing =0
@@ -97,13 +100,8 @@ def scan():
                 print(data)
                 
                 io = StringIO()
-                json.dump(data, io)
-               # print(io.getvalue())
-               # print('')
-                
-                io=StringIO()
-                
-                json.dump(data, io)
+                json.dump(data, io) # data json 으로 변경
+             
                 bdata=io.getvalue()
                 #print(bdata)
                 
@@ -117,7 +115,7 @@ def scan():
                 #client.subscribe("encyclopedia/#", qos=1)
 
                 # a single publish, this can also be done in loops, etc.
-                mqtt=client.publish("abc", payload=bdata, qos=0)
+                mqtt=client.publish("abc", payload=bdata, qos=0) # 토픽 설정후 hive mq로 발행
                             
                 capturing =0
                 packet=''
