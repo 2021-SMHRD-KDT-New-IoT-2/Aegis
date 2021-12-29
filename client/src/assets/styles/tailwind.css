@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes pulse {
+  50% {
+    opacity: 0;
+  }
+}
+.animate-pulse1 {
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@font-face {
+  font-family: 'nanum-light';
+  src: url(../fonts/NanumSquareL.otf);
+}
+@font-face {
+  font-family: 'nanum-regular';
+  src: url(../fonts/NanumSquareR.otf);
+}
+@font-face {
+  font-family: 'nanum-bold';
+  src: url(../fonts/NanumSquareB.otf);
+}
+@font-face {
+  font-family: 'nanum-eb';
+  src: url(../fonts/NanumSquareEB.otf);
+}
+@font-face {
+  font-family: 'nanum-acl';
+  src: url(../fonts/NanumSquareOTF_acL.otf);
+}
+@font-face {
+  font-family: 'nanum-acb';
+  src: url(../fonts/NanumSquareOTF_acB.otf);
+}
+
+.help {
+  background-color: blue;
+}
